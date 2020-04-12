@@ -27,5 +27,9 @@ export default {
     border-width: 2px;
     background-color: #F9C270;
   }
+
+  .square:hover {
+    background-color: rgb(207, 177, 131);
+  }
 </style>
 
