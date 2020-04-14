@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div :class="{red: placementable}">
     <img
       draggable
       @dragstart="dragStart([y, x])"
       @drop="dropped([y, x])"
       @dragover.prevent
       @dragenter.prevent
+      @mousedown="hoge([y, x])"
       :src="imgSrc"
     >
   </div>
@@ -43,6 +44,14 @@ export default {
     typeNumber: {
       type: Number,
       required: true
+    },
+    placementable: {
+      type: Boolean,
+      required: true
+    },
+    shogiBoard: {
+      type: Array,
+      required: true
     }
   },
   computed: {
@@ -64,8 +73,23 @@ export default {
       const dragPoint = event.dataTransfer
         .getData("drag-point")
         .split(",")
-        .map((x) => parseInt(x));
+        .map(x => parseInt(x));
       this.$emit("updated", dragPoint, dropPoint);
+    },
+    hoge(point) {
+      let table = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      ];
+      table[point[0] - 1][point[1]] = 1;
+      this.$emit("updatePutTable", table);
     }
   }
 };
@@ -74,6 +98,10 @@ export default {
 <style scoped>
 div {
   text-align: center;
+}
+
+.red {
+  background-color: rgb(218, 68, 68);
 }
 
 img {

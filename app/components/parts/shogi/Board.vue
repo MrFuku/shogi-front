@@ -15,7 +15,10 @@
               :y="y"
               :x="x"
               :typeNumber="sq"
+              :shogiBoard="shogiBoard"
+              :placementable="canPutDown[y][x] === 1"
               @updated="updated"
+              @updatePutTable="updatePutTable"
             />
           </td>
         </tr>
@@ -26,6 +29,18 @@
 
 <script>
 import Piece from "~/components/parts/shogi/Pieces/Piece.vue";
+
+const zeroTable = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      ]
 
 export default {
   components: {
@@ -43,7 +58,8 @@ export default {
         [13, 13, 13, 13, 13, 13, 13, 13, 13],
         [0, 4, 0, 0, 0, 0, 0, 2, 0],
         [11, 9, 7, 6, 1, 6, 7, 9, 11]
-      ]
+      ],
+      canPutDown: zeroTable
     };
   },
   methods: {
@@ -51,9 +67,16 @@ export default {
       this.replacePiece(dragPoint, dropPoint);
     },
     replacePiece(dragPoint, dropPoint) {
+      const h = this.canPutDown[dropPoint[0]][dropPoint[1]]
+      this.canPutDown = zeroTable
+      if (h === 0) return;
+
       const dragPiece = this.shogiBoard[dragPoint[0]][dragPoint[1]];
       this.shogiBoard[dragPoint[0]].splice([dragPoint[1]], 1, 0);
       this.shogiBoard[dropPoint[0]].splice([dropPoint[1]], 1, dragPiece);
+    },
+    updatePutTable(table) {
+      this.canPutDown = table
     }
   }
 };
