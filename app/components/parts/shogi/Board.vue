@@ -2,7 +2,7 @@
   <div class="board">
     <table border="3">
       <tr
-        v-for="(h, y) in hoge"
+        v-for="(h, y) in shogiBoard"
         :key="y"
       >
         <td
@@ -29,8 +29,7 @@ export default {
     Piece
   },
   data: () => ({
-    size: 9,
-    hoge: [
+    shogiBoard: [
       [0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -43,12 +42,13 @@ export default {
     ]
   }),
   methods: {
-    updated(old, newv) {
-      let movedPiece = this.hoge[old[0]][old[1]];
-      this.hoge[newv[0]].splice(newv[1], 1, movedPiece);
-      this.hoge[old[0]].splice(old[1], 1, 0);
-      // this.hoge.splice(old[0], 1, tmpRow)
-      console.log(this.hoge);
+    updated(dragPoint, dropPoint) {
+      this.replacePiece(dragPoint, dropPoint);
+    },
+    replacePiece(dragPoint, dropPoint) {
+      const dragPiece = this.shogiBoard[dragPoint[0]][dragPoint[1]];
+      this.shogiBoard[dragPoint[0]].splice([dragPoint[1]], 1, 0);
+      this.shogiBoard[dropPoint[0]].splice([dropPoint[1]], 1, dragPiece);
     }
   }
 };

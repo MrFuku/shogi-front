@@ -2,8 +2,7 @@
   <div>
     <img
       draggable
-      v-show="hoge"
-      @dragstart="dragList($event)"
+      @dragstart="setDragPoint(y, x)"
       @dragover.prevent
       @dragenter.prevent
       src="~/assets/images/pieces/pawn.png"
@@ -12,23 +11,14 @@
 </template>
 
 <script>
+import PieceDraggable from "~/components/mixin/PieceDraggable.js";
+
 export default {
   props: {
     y: null,
     x: null
   },
-  methods: {
-    dragList(event) {
-      event.dataTransfer.effectAllowed = "move";
-      event.dataTransfer.dropEffect = "move";
-      event.dataTransfer.setData("piece-move", [this.y, this.x]);
-    }
-  },
-  data() {
-    return {
-      hoge: true
-    };
-  }
+  mixins: [PieceDraggable]
 };
 </script>
 
