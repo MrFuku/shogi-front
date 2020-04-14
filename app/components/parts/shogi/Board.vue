@@ -3,12 +3,12 @@
     <table border="3">
       <tbody>
         <tr
-          v-for="y in size"
+          v-for="(row, y) in shogiBoard"
           :key="y"
         >
           <td
             class="square"
-            v-for="x in size"
+            v-for="(sq, x) in row"
             :key="x"
           ></td>
         </tr>
@@ -19,9 +19,21 @@
 
 <script>
 export default {
-  data: () => ({
-    size: 9
-  })
+  data() {
+    return {
+      shogiBoard: [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      ]
+    };
+  }
 };
 </script>
 
