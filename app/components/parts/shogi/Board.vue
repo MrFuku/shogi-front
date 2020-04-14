@@ -1,16 +1,18 @@
 <template>
   <div class="board">
     <table border="3">
-      <tr
-        v-for="y in size"
-        :key="y"
-      >
-        <td
-          class="square"
-          v-for="x in size"
-          :key="x"
-        ></td>
-      </tr>
+      <tbody>
+        <tr
+          v-for="y in size"
+          :key="y"
+        >
+          <td
+            class="square"
+            v-for="x in size"
+            :key="x"
+          ></td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>
