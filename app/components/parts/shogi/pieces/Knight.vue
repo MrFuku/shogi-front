@@ -5,10 +5,6 @@
 </template>
 
 <style scoped>
-div {
-  text-align: center;
-}
-
 img {
   height: 50px;
 }
