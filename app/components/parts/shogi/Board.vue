@@ -10,7 +10,13 @@
             class="square"
             v-for="(sq, x) in row"
             :key="x"
-          ></td>
+          >
+            <Piece
+              :y="1"
+              :x="1"
+              :typeNumber="sq"
+            />
+          </td>
         </tr>
       </tbody>
     </table>
@@ -18,7 +24,12 @@
 </template>
 
 <script>
+import Piece from "~/components/parts/shogi/Pieces/Piece.vue";
+
 export default {
+  components: {
+    Piece
+  },
   data() {
     return {
       shogiBoard: [
@@ -28,9 +39,9 @@ export default {
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+        [13, 13, 13, 13, 13, 13, 13, 13, 13],
+        [0, 4, 0, 0, 0, 0, 0, 2, 0],
+        [11, 9, 7, 6, 1, 6, 7, 9, 11]
       ]
     };
   }
