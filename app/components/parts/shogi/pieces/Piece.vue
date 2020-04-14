@@ -1,6 +1,13 @@
 <template>
   <div>
-    <img :src="imgSrc">
+    <img
+      draggable
+      @dragstart="dragStart([y, x])"
+      @drop="dropped([y, x])"
+      @dragover.prevent
+      @dragenter.prevent
+      :src="imgSrc"
+    >
   </div>
 </template>
 
@@ -47,6 +54,18 @@ export default {
         const fileName = type.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
         return `/images/pieces/${fileName}.png`;
       }
+    }
+  },
+  methods: {
+    dragStart(dragPoint) {
+      event.dataTransfer.setData("drag-point", dragPoint);
+    },
+    dropped(dropPoint) {
+      const dragPoint = event.dataTransfer
+        .getData("drag-point")
+        .split(",")
+        .map((x) => parseInt(x));
+      this.$emit("updated", dragPoint, dropPoint);
     }
   }
 };
