@@ -12,9 +12,10 @@
             :key="x"
           >
             <Piece
-              :y="1"
-              :x="1"
+              :y="y"
+              :x="x"
               :typeNumber="sq"
+              @updated="updated"
             />
           </td>
         </tr>
@@ -44,6 +45,16 @@ export default {
         [11, 9, 7, 6, 1, 6, 7, 9, 11]
       ]
     };
+  },
+  methods: {
+    updated(dragPoint, dropPoint) {
+      this.replacePiece(dragPoint, dropPoint);
+    },
+    replacePiece(dragPoint, dropPoint) {
+      const dragPiece = this.shogiBoard[dragPoint[0]][dragPoint[1]];
+      this.shogiBoard[dragPoint[0]].splice([dragPoint[1]], 1, 0);
+      this.shogiBoard[dropPoint[0]].splice([dropPoint[1]], 1, dragPiece);
+    }
   }
 };
 </script>
