@@ -7,6 +7,7 @@
       @dragover.prevent
       @dragenter.prevent
       @mousedown="hoge([y, x])"
+      @mouseup="hoge1"
       :src="imgSrc"
     >
   </div>
@@ -89,6 +90,20 @@ export default {
         [0, 0, 0, 0, 0, 0, 0, 0, 0]
       ];
       table[point[0] - 1][point[1]] = 1;
+      this.$emit("updatePutTable", table);
+    },
+    hoge1() {
+      let table = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      ];
       this.$emit("updatePutTable", table);
     }
   }
