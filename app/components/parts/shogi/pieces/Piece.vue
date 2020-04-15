@@ -15,6 +15,7 @@
 
 <script>
 import boardCreatable from "~/components/mixin/boardCreatable.js";
+import pieceMoveable from "~/components/mixin/pieceMoveable.js";
 
 const pieceTypes = [
   "Empty",
@@ -35,7 +36,7 @@ const pieceTypes = [
 ];
 
 export default {
-  mixins: [boardCreatable],
+  mixins: [boardCreatable, pieceMoveable],
   props: {
     y: {
       type: Number,
@@ -77,8 +78,8 @@ export default {
       this.$emit("updated", dragPoint, dropPoint);
     },
     exploration(point) {
-      let table = this.getZeroTable();
-      table[point[0] - 1][point[1]] = 1;
+      let f = this.getExploration(this.typeNumber);
+      let table = f(this.getZeroTable(), point);
       this.$emit("updatePutTable", table);
     },
     putTableReset() {
