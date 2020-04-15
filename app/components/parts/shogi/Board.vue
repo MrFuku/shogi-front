@@ -15,6 +15,7 @@
               :y="y"
               :x="x"
               :typeNumber="sq"
+              :placementable="canPutDown[y][x] === 1"
               @updated="updated"
             />
           </td>
@@ -25,9 +26,11 @@
 </template>
 
 <script>
+import boardCreatable from "~/components/mixin/boardCreatable.js";
 import Piece from "~/components/parts/shogi/Pieces/Piece.vue";
 
 export default {
+  mixins: [boardCreatable],
   components: {
     Piece
   },
@@ -43,7 +46,8 @@ export default {
         [13, 13, 13, 13, 13, 13, 13, 13, 13],
         [0, 4, 0, 0, 0, 0, 0, 2, 0],
         [11, 9, 7, 6, 1, 6, 7, 9, 11]
-      ]
+      ],
+      canPutDown: this.getZeroTable()
     };
   },
   methods: {

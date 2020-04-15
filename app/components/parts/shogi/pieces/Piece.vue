@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{red: placementable}">
     <img
       draggable
       @dragstart="dragStart([y, x])"
@@ -43,6 +43,10 @@ export default {
     typeNumber: {
       type: Number,
       required: true
+    },
+    placementable: {
+      type: Boolean,
+      required: true
     }
   },
   computed: {
@@ -64,7 +68,7 @@ export default {
       const dragPoint = event.dataTransfer
         .getData("drag-point")
         .split(",")
-        .map((x) => parseInt(x));
+        .map(x => parseInt(x));
       this.$emit("updated", dragPoint, dropPoint);
     }
   }
@@ -74,6 +78,10 @@ export default {
 <style scoped>
 div {
   text-align: center;
+}
+
+div.red {
+  background-color: rgb(218, 68, 68);
 }
 
 img {
