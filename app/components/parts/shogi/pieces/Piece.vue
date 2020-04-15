@@ -1,17 +1,21 @@
 <template>
-  <div>
+  <div :class="{red: placementable}">
     <img
       draggable
       @dragstart="dragStart([y, x])"
       @drop="dropped([y, x])"
       @dragover.prevent
       @dragenter.prevent
+      @mousedown="exploration([y, x])"
+      @mouseup="putTableReset"
       :src="imgSrc"
     >
   </div>
 </template>
 
 <script>
+import boardCreatable from "~/components/mixin/boardCreatable.js";
+
 const pieceTypes = [
   "Empty",
   "King",
@@ -31,6 +35,7 @@ const pieceTypes = [
 ];
 
 export default {
+  mixins: [boardCreatable],
   props: {
     y: {
       type: Number,
@@ -42,6 +47,10 @@ export default {
     },
     typeNumber: {
       type: Number,
+      required: true
+    },
+    placementable: {
+      type: Boolean,
       required: true
     }
   },
@@ -64,8 +73,16 @@ export default {
       const dragPoint = event.dataTransfer
         .getData("drag-point")
         .split(",")
-        .map((x) => parseInt(x));
+        .map(x => parseInt(x));
       this.$emit("updated", dragPoint, dropPoint);
+    },
+    exploration(point) {
+      let table = this.getZeroTable();
+      table[point[0] - 1][point[1]] = 1;
+      this.$emit("updatePutTable", table);
+    },
+    putTableReset() {
+      this.$emit("updatePutTable", this.getZeroTable());
     }
   }
 };
@@ -74,6 +91,10 @@ export default {
 <style scoped>
 div {
   text-align: center;
+}
+
+div.red {
+  background-color: rgb(218, 68, 68);
 }
 
 img {

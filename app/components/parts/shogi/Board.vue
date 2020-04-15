@@ -15,7 +15,9 @@
               :y="y"
               :x="x"
               :typeNumber="sq"
+              :placementable="canPutDown[y][x] === 1"
               @updated="updated"
+              @updatePutTable="updatePutTable"
             />
           </td>
         </tr>
@@ -25,9 +27,11 @@
 </template>
 
 <script>
+import boardCreatable from "~/components/mixin/boardCreatable.js";
 import Piece from "~/components/parts/shogi/Pieces/Piece.vue";
 
 export default {
+  mixins: [boardCreatable],
   components: {
     Piece
   },
@@ -43,7 +47,8 @@ export default {
         [13, 13, 13, 13, 13, 13, 13, 13, 13],
         [0, 4, 0, 0, 0, 0, 0, 2, 0],
         [11, 9, 7, 6, 1, 6, 7, 9, 11]
-      ]
+      ],
+      canPutDown: this.getZeroTable()
     };
   },
   methods: {
@@ -51,9 +56,16 @@ export default {
       this.replacePiece(dragPoint, dropPoint);
     },
     replacePiece(dragPoint, dropPoint) {
+      const c = this.canPutDown[dropPoint[0]][dropPoint[1]];
+      this.canPutDown = this.getZeroTable();
+      if (c === 0) return;
+
       const dragPiece = this.shogiBoard[dragPoint[0]][dragPoint[1]];
       this.shogiBoard[dragPoint[0]].splice([dragPoint[1]], 1, 0);
       this.shogiBoard[dropPoint[0]].splice([dropPoint[1]], 1, dragPiece);
+    },
+    updatePutTable(table) {
+      this.canPutDown = table;
     }
   }
 };
