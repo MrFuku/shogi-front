@@ -7,5 +7,11 @@ export default {
     getExploration(type) {
       return this.pawnExploration;
     },
+    isTableRange(y, x) {
+      if (y < 0 || x < 0) return false;
+      if (y > 8 || x > 8) return false;
+
+      return true;
+    },
   },
 };
