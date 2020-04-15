@@ -29,20 +29,10 @@
 
 <script>
 import Piece from "~/components/parts/shogi/Pieces/Piece.vue";
-
-const zeroTable = [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-      ]
+import boardCreatable from "~/components/mixin/boardCreatable.js";
 
 export default {
+  mixins: [boardCreatable],
   components: {
     Piece
   },
@@ -59,7 +49,7 @@ export default {
         [0, 4, 0, 0, 0, 0, 0, 2, 0],
         [11, 9, 7, 6, 1, 6, 7, 9, 11]
       ],
-      canPutDown: zeroTable
+      canPutDown: this.getZeroTable()
     };
   },
   methods: {
@@ -68,7 +58,7 @@ export default {
     },
     replacePiece(dragPoint, dropPoint) {
       const h = this.canPutDown[dropPoint[0]][dropPoint[1]]
-      this.canPutDown = zeroTable
+      this.canPutDown = this.getZeroTable()
       if (h === 0) return;
 
       const dragPiece = this.shogiBoard[dragPoint[0]][dragPoint[1]];

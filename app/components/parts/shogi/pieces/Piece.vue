@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import boardCreatable from "~/components/mixin/boardCreatable.js";
+
 const pieceTypes = [
   "Empty",
   "King",
@@ -45,6 +47,7 @@ const zeroTable = [
 ];
 
 export default {
+  mixins: [boardCreatable],
   props: {
     y: {
       type: Number,
@@ -90,12 +93,12 @@ export default {
       this.$emit("updated", dragPoint, dropPoint);
     },
     hoge(point) {
-      let table = zeroTable
+      let table = this.getZeroTable()
       table[point[0] - 1][point[1]] = 1;
       this.$emit("updatePutTable", table);
     },
     hoge1() {
-      this.$emit("updatePutTable", zeroTable);
+      this.$emit("updatePutTable", this.getZeroTable());
     }
   }
 };
