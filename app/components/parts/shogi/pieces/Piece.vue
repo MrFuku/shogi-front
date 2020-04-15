@@ -6,12 +6,16 @@
       @drop="dropped([y, x])"
       @dragover.prevent
       @dragenter.prevent
+      @mousedown="exploration([y, x])"
+      @mouseup="putTableReset"
       :src="imgSrc"
     >
   </div>
 </template>
 
 <script>
+import boardCreatable from "~/components/mixin/boardCreatable.js";
+
 const pieceTypes = [
   "Empty",
   "King",
@@ -31,6 +35,7 @@ const pieceTypes = [
 ];
 
 export default {
+  mixins: [boardCreatable],
   props: {
     y: {
       type: Number,
@@ -70,6 +75,14 @@ export default {
         .split(",")
         .map(x => parseInt(x));
       this.$emit("updated", dragPoint, dropPoint);
+    },
+    exploration(point) {
+      let table = this.getZeroTable();
+      table[point[0] - 1][point[1]] = 1;
+      this.$emit("updatePutTable", table);
+    },
+    putTableReset() {
+      this.$emit("updatePutTable", this.getZeroTable());
     }
   }
 };
