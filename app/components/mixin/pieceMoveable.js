@@ -1,5 +1,25 @@
 export default {
   methods: {
+    rockExploration(table, point) {
+      const directions = [
+        [-1, 0],
+        [1, 0],
+        [0, 1],
+        [0, -1],
+      ];
+      directions.forEach((dir) => this.repeat(table, point[0], point[1], dir));
+      return table;
+    },
+    bishopExploration(table, point) {
+      const directions = [
+        [-1, -1],
+        [1, 1],
+        [-1, 1],
+        [1, -1],
+      ];
+      directions.forEach((dir) => this.repeat(table, point[0], point[1], dir));
+      return table;
+    },
     lanceExploration(table, point) {
       return this.repeat(table, point[0], point[1], [-1, 0]);
     },
@@ -8,10 +28,15 @@ export default {
       return table;
     },
     getExploration(type) {
-      if (type === 11) {
-        return this.lanceExploration;
-      } else {
-        return this.pawnExploration;
+      switch (type) {
+        case 2:
+          return this.rockExploration;
+        case 4:
+          return this.bishopExploration;
+        case 11:
+          return this.lanceExploration;
+        default:
+          return this.pawnExploration;
       }
     },
     repeat(table, y, x, direction) {
