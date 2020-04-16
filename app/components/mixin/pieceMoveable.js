@@ -24,7 +24,7 @@ export default {
       return this.repeat(table, point[0], point[1], [-1, 0]);
     },
     pawnExploration(table, point) {
-      table[point[0] - 1][point[1]] = 1;
+      this.isPutDown(table, point[0] - 1, point[1]);
       return table;
     },
     getExploration(type) {
@@ -42,11 +42,15 @@ export default {
     repeat(table, y, x, direction) {
       y += direction[0];
       x += direction[1];
-      if (this.isTableRange(y, x)) {
-        table[y][x] = 1;
+      if (this.isPutDown(table, y, x)) {
         this.repeat(table, y, x, direction);
       }
       return table;
+    },
+    isPutDown(table, y, x) {
+      if (this.isTableRange(y, x) === false) return false;
+      table[y][x] = 1;
+      return true;
     },
     isTableRange(y, x) {
       if (y < 0 || x < 0) return false;
