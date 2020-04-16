@@ -1,5 +1,10 @@
 export default {
   methods: {
+    kingExploration(table, point) {
+      this.goldExploration(table, point);
+      this.silverExploration(table, point);
+      return table;
+    },
     rockExploration(table, point) {
       const directions = [
         [-1, 0],
@@ -56,6 +61,8 @@ export default {
     },
     getExploration(type) {
       switch (type) {
+        case 1:
+          return this.kingExploration;
         case 2:
           return this.rockExploration;
         case 4:
