@@ -1,5 +1,10 @@
 export default {
   methods: {
+    kingExploration(table, point) {
+      this.goldExploration(table, point);
+      this.silverExploration(table, point);
+      return table;
+    },
     rockExploration(table, point) {
       const directions = [
         [-1, 0],
@@ -47,6 +52,16 @@ export default {
       );
       return table;
     },
+    knightExploration(table, point) {
+      const directions = [
+        [-2, -1],
+        [-2, 1],
+      ];
+      directions.forEach((dir) =>
+        this.isPutDown(table, point[0] + dir[0], point[1] + dir[1])
+      );
+      return table;
+    },
     lanceExploration(table, point) {
       return this.repeat(table, point[0], point[1], [-1, 0]);
     },
@@ -56,6 +71,8 @@ export default {
     },
     getExploration(type) {
       switch (type) {
+        case 1:
+          return this.kingExploration;
         case 2:
           return this.rockExploration;
         case 4:
@@ -64,6 +81,8 @@ export default {
           return this.goldExploration;
         case 7:
           return this.silverExploration;
+        case 9:
+          return this.knightExploration;
         case 11:
           return this.lanceExploration;
         default:
