@@ -20,6 +20,20 @@ export default {
       directions.forEach((dir) => this.repeat(table, point[0], point[1], dir));
       return table;
     },
+    goldExploration(table, point) {
+      const directions = [
+        [-1, -1],
+        [-1, 0],
+        [-1, 1],
+        [0, 1],
+        [0, -1],
+        [1, 0],
+      ];
+      directions.forEach((dir) =>
+        this.isPutDown(table, point[0] + dir[0], point[1] + dir[1])
+      );
+      return table;
+    },
     lanceExploration(table, point) {
       return this.repeat(table, point[0], point[1], [-1, 0]);
     },
@@ -33,6 +47,8 @@ export default {
           return this.rockExploration;
         case 4:
           return this.bishopExploration;
+        case 6:
+          return this.goldExploration;
         case 11:
           return this.lanceExploration;
         default:
