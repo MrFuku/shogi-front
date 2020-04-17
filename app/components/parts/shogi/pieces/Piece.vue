@@ -8,6 +8,7 @@
       @dragenter.prevent
       @mousedown="exploration([y, x])"
       @mouseup="putTableReset"
+      :class="enemyClass"
       :src="imgSrc"
     >
   </div>
@@ -46,8 +47,8 @@ export default {
       type: Number,
       required: true
     },
-    typeNumber: {
-      type: Number,
+    pieceObject: {
+      type: Object,
       required: true
     },
     placementable: {
@@ -57,13 +58,16 @@ export default {
   },
   computed: {
     imgSrc() {
-      if (this.typeNumber === 0) {
+      if (this.pieceObject.type === 0) {
         return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQI12NgYAAAAAMAASDVlMcAAAAASUVORK5CYII=";
       } else {
-        const type = pieceTypes[this.typeNumber];
+        const type = pieceTypes[this.pieceObject.type];
         const fileName = type.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
         return `/images/pieces/${fileName}.png`;
       }
+    },
+    enemyClass() {
+      return this.pieceObject.enemy ? 'enemy' : 'ally';
     }
   },
   methods: {
@@ -78,7 +82,7 @@ export default {
       this.$emit("updated", dragPoint, dropPoint);
     },
     exploration(point) {
-      let f = this.getExploration(this.typeNumber);
+      let f = this.getExploration(this.pieceObject.type);
       let table = f(this.getZeroTable(), point);
       this.$emit("updatePutTable", table);
     },
@@ -100,5 +104,9 @@ div.red {
 
 img {
   height: 50px;
+}
+
+.enemy {
+  transform: rotate(180deg);
 }
 </style>

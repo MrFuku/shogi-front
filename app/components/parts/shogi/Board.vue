@@ -8,13 +8,13 @@
         >
           <td
             class="square"
-            v-for="(sq, x) in row"
+            v-for="(po, x) in row"
             :key="x"
           >
             <Piece
               :y="y"
               :x="x"
-              :typeNumber="sq"
+              :pieceObject="po"
               :placementable="canPutDown[y][x] === 1"
               @updated="updated"
               @updatePutTable="updatePutTable"
@@ -37,17 +37,7 @@ export default {
   },
   data() {
     return {
-      shogiBoard: [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [13, 13, 13, 13, 13, 13, 13, 13, 13],
-        [0, 4, 0, 0, 0, 0, 0, 2, 0],
-        [11, 9, 7, 6, 1, 6, 7, 9, 11]
-      ],
+      shogiBoard: this.initBoard(),
       canPutDown: this.getZeroTable()
     };
   },
