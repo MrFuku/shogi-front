@@ -11,14 +11,7 @@
             v-for="(po, x) in row"
             :key="x"
           >
-            <Piece
-              :y="y"
-              :x="x"
-              :pieceObject="po"
-              :placementable="canPutDown[y][x] === 1"
-              @updated="updated"
-              @updatePutTable="updatePutTable"
-            />
+            <Piece :pieceObject="po" />
           </td>
         </tr>
       </tbody>
@@ -27,36 +20,26 @@
 </template>
 
 <script>
-import boardCreatable from "~/components/mixin/boardCreatable.js";
 import Piece from "~/components/parts/shogi/Pieces/Piece.vue";
 
 export default {
-  mixins: [boardCreatable],
   components: {
     Piece
   },
   data() {
     return {
-      shogiBoard: this.initBoard(),
-      canPutDown: this.getZeroTable()
+      shogiBoard: []
     };
   },
   methods: {
-    updated(dragPoint, dropPoint) {
-      this.replacePiece(dragPoint, dropPoint);
-    },
-    replacePiece(dragPoint, dropPoint) {
-      const c = this.canPutDown[dropPoint[0]][dropPoint[1]];
-      this.canPutDown = this.getZeroTable();
-      if (c === 0) return;
-
-      const dragPiece = this.shogiBoard[dragPoint[0]][dragPoint[1]];
-      this.shogiBoard[dragPoint[0]].splice([dragPoint[1]], 1, 0);
-      this.shogiBoard[dropPoint[0]].splice([dropPoint[1]], 1, dragPiece);
-    },
-    updatePutTable(table) {
-      this.canPutDown = table;
+    async init() {
+      const url = "/table";
+      const response = await this.$axios.$get(url);
+      this.shogiBoard = response.table;
     }
+  },
+  mounted() {
+    this.init();
   }
 };
 </script>
