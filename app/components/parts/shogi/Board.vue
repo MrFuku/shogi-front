@@ -37,26 +37,19 @@ export default {
   },
   data() {
     return {
-      shogiBoard: this.initBoard(),
+      shogiBoard: []
       canPutDown: this.getZeroTable()
     };
   },
   methods: {
-    updated(dragPoint, dropPoint) {
-      this.replacePiece(dragPoint, dropPoint);
-    },
-    replacePiece(dragPoint, dropPoint) {
-      const c = this.canPutDown[dropPoint[0]][dropPoint[1]];
-      this.canPutDown = this.getZeroTable();
-      if (c === 0) return;
-
-      const dragPiece = this.shogiBoard[dragPoint[0]][dragPoint[1]];
-      this.shogiBoard[dragPoint[0]].splice([dragPoint[1]], 1, 0);
-      this.shogiBoard[dropPoint[0]].splice([dropPoint[1]], 1, dragPiece);
-    },
-    updatePutTable(table) {
-      this.canPutDown = table;
+    async init() {
+      const url = "/table";
+      const response = await this.$axios.$get(url);
+      this.shogiBoard = response.table;
     }
+  },
+  mounted() {
+    this.init();
   }
 };
 </script>
