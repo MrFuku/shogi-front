@@ -11,7 +11,11 @@
             v-for="(po, x) in row"
             :key="x"
           >
-            <Piece :pieceObject="po" />
+            <Piece
+              :pieceObject="po"
+              :pickupPieceId="pickupPieceId"
+              @pickup="pickup"
+            />
           </td>
         </tr>
       </tbody>
@@ -28,10 +32,14 @@ export default {
   },
   data() {
     return {
-      shogiBoard: []
+      shogiBoard: [],
+      pickupPieceId: -1
     };
   },
   methods: {
+    pickup(pieceId) {
+      this.pickupPieceId = pieceId;
+    },
     async init() {
       const url = "/table";
       const response = await this.$axios.$get(url);

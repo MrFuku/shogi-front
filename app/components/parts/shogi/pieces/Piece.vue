@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div :class="classObject">
     <img
-      :class="enemyClass"
       :src="imgSrc"
+      @mousedown="pickup"
+      @mouseup="pickdown"
     >
   </div>
 </template>
@@ -31,6 +32,21 @@ export default {
     pieceObject: {
       type: Object,
       required: true
+    },
+    pickupPieceId: {
+      type: Number,
+      required: true
+    }
+  },
+  methods: {
+    changePickupId(pieceId) {
+      this.$emit('pickup', pieceId);
+    },
+    pickup() {
+      this.changePickupId(this.pieceObject.pieceId);
+    },
+    pickdown() {
+      this.changePickupId(-1);
     }
   },
   computed: {
@@ -43,8 +59,17 @@ export default {
         return `/images/pieces/${fileName}.png`;
       }
     },
-    enemyClass() {
-      return this.pieceObject.playerId == 2 ? "enemy" : "ally";
+    classObject() {
+      return {
+        enemy: this.isEnemy,
+        puttable: this.puttable
+      };
+    },
+    isEnemy() {
+      return this.pieceObject.playerId == 2;
+    },
+    puttable() {
+      return this.pieceObject.puttableIds.includes(this.pickupPieceId);
     }
   }
 };
@@ -55,7 +80,7 @@ div {
   text-align: center;
 }
 
-div.red {
+div.puttable {
   background-color: rgb(218, 68, 68);
 }
 
