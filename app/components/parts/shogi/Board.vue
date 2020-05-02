@@ -11,14 +11,7 @@
             v-for="(po, x) in row"
             :key="x"
           >
-            <Piece
-              :y="y"
-              :x="x"
-              :pieceObject="po"
-              :placementable="canPutDown[y][x] === 1"
-              @updated="updated"
-              @updatePutTable="updatePutTable"
-            />
+            <Piece :pieceObject="po" />
           </td>
         </tr>
       </tbody>
@@ -27,18 +20,15 @@
 </template>
 
 <script>
-import boardCreatable from "~/components/mixin/boardCreatable.js";
 import Piece from "~/components/parts/shogi/Pieces/Piece.vue";
 
 export default {
-  mixins: [boardCreatable],
   components: {
     Piece
   },
   data() {
     return {
       shogiBoard: []
-      canPutDown: this.getZeroTable()
     };
   },
   methods: {

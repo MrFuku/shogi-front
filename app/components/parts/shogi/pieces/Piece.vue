@@ -1,13 +1,6 @@
 <template>
-  <div :class="{red: placementable}">
+  <div>
     <img
-      draggable
-      @dragstart="dragStart([y, x])"
-      @drop="dropped([y, x])"
-      @dragover.prevent
-      @dragenter.prevent
-      @mousedown="exploration([y, x])"
-      @mouseup="putTableReset"
       :class="enemyClass"
       :src="imgSrc"
     >
@@ -15,9 +8,6 @@
 </template>
 
 <script>
-import boardCreatable from "~/components/mixin/boardCreatable.js";
-import pieceMoveable from "~/components/mixin/pieceMoveable.js";
-
 const pieceTypes = [
   "Empty",
   "King",
@@ -37,22 +27,9 @@ const pieceTypes = [
 ];
 
 export default {
-  mixins: [boardCreatable, pieceMoveable],
   props: {
-    y: {
-      type: Number,
-      required: true
-    },
-    x: {
-      type: Number,
-      required: true
-    },
     pieceObject: {
       type: Object,
-      required: true
-    },
-    placementable: {
-      type: Boolean,
       required: true
     }
   },
@@ -67,27 +44,7 @@ export default {
       }
     },
     enemyClass() {
-      return this.pieceObject.enemy ? 'enemy' : 'ally';
-    }
-  },
-  methods: {
-    dragStart(dragPoint) {
-      event.dataTransfer.setData("drag-point", dragPoint);
-    },
-    dropped(dropPoint) {
-      const dragPoint = event.dataTransfer
-        .getData("drag-point")
-        .split(",")
-        .map(x => parseInt(x));
-      this.$emit("updated", dragPoint, dropPoint);
-    },
-    exploration(point) {
-      let f = this.getExploration(this.pieceObject.type);
-      let table = f(this.getZeroTable(), point);
-      this.$emit("updatePutTable", table);
-    },
-    putTableReset() {
-      this.$emit("updatePutTable", this.getZeroTable());
+      return this.pieceObject.playerId == 2 ? "enemy" : "ally";
     }
   }
 };
