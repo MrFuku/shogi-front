@@ -1,7 +1,6 @@
 <template>
-  <div>
+  <div :class="classObject">
     <img
-      :class="enemyClass"
       :src="imgSrc"
       @mousedown="pickup"
       @mouseup="pickdown"
@@ -60,8 +59,17 @@ export default {
         return `/images/pieces/${fileName}.png`;
       }
     },
-    enemyClass() {
-      return this.pieceObject.playerId == 2 ? "enemy" : "ally";
+    classObject() {
+      return {
+        enemy: this.isEnemy,
+        puttable: this.puttable
+      };
+    },
+    isEnemy() {
+      return this.pieceObject.playerId == 2;
+    },
+    puttable() {
+      return this.pieceObject.puttableIds.includes(this.pickupPieceId);
     }
   }
 };
@@ -72,7 +80,7 @@ div {
   text-align: center;
 }
 
-div.red {
+div.puttable {
   background-color: rgb(218, 68, 68);
 }
 
