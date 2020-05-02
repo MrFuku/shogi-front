@@ -3,6 +3,8 @@
     <img
       :class="enemyClass"
       :src="imgSrc"
+      @mousedown="pickup"
+      @mouseup="pickdown"
     >
   </div>
 </template>
@@ -31,6 +33,21 @@ export default {
     pieceObject: {
       type: Object,
       required: true
+    },
+    pickupPieceId: {
+      type: Number,
+      required: true
+    }
+  },
+  methods: {
+    changePickupId(pieceId) {
+      this.$emit('pickup', pieceId);
+    },
+    pickup() {
+      this.changePickupId(this.pieceObject.pieceId);
+    },
+    pickdown() {
+      this.changePickupId(-1);
     }
   },
   computed: {
