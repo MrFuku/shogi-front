@@ -4,6 +4,10 @@
       :src="imgSrc"
       @mousedown="pickup"
       @mouseup="pickdown"
+      @dragend="pickdown"
+      @drop="droped()"
+      @dragover.prevent
+      @dragenter.prevent
     >
   </div>
 </template>
@@ -40,13 +44,20 @@ export default {
   },
   methods: {
     changePickupId(pieceId) {
-      this.$emit('pickup', pieceId);
+      this.$emit("pickup", pieceId);
     },
     pickup() {
       this.changePickupId(this.pieceObject.pieceId);
     },
     pickdown() {
       this.changePickupId(-1);
+    },
+    droped() {
+      if (!this.puttable) return
+
+      const y = Math.floor(this.pieceObject.pieceId / 10);
+      const x = this.pieceObject.pieceId % 10;
+      this.$emit("move", y, x);
     }
   },
   computed: {
