@@ -15,6 +15,7 @@
               :pieceObject="po"
               :pickupPieceId="pickupPieceId"
               @pickup="pickup"
+              @move="move"
             />
           </td>
         </tr>
