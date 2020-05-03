@@ -26,5 +26,7 @@ WORKDIR /app
 
 RUN yarn install
 
+RUN yarn add @nuxtjs/vuetify
+
 EXPOSE 3000
 CMD ["yarn", "run", "dev"]
