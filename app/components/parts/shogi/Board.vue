@@ -40,6 +40,17 @@ export default {
     pickup(pieceId) {
       this.pickupPieceId = pieceId;
     },
+    async move(y, x) {
+      const url = "/table/move";
+      const data = {
+        table: this.shogiBoard,
+        y,
+        x,
+        pieceId: this.pickupPieceId
+      };
+      const response = await this.$axios.$post(url, data);
+      this.shogiBoard = response.table;
+    },
     async init() {
       const url = "/table";
       const response = await this.$axios.$get(url);
