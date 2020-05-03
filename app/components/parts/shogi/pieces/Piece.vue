@@ -4,6 +4,7 @@
       :src="imgSrc"
       @mousedown="pickup"
       @mouseup="pickdown"
+      @dragend="pickdown"
       @drop="droped()"
       @dragover.prevent
       @dragenter.prevent
