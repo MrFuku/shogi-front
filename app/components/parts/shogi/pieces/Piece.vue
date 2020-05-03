@@ -14,21 +14,21 @@
 
 <script>
 const pieceTypes = [
-  "Empty",
-  "King",
-  "Rock",
-  "PromotedRock",
-  "Bishop",
-  "PromotedBishop",
-  "Gold",
-  "Silver",
-  "PromotedSilver",
-  "Knight",
-  "PromotedKnight",
-  "Lance",
-  "PromotedLance",
-  "Pawn",
-  "PromotedPawn"
+  "empty",
+  "king",
+  "rock",
+  "promoted-rock",
+  "bishop",
+  "promoted-bishop",
+  "gold",
+  "silver",
+  "promoted-silver",
+  "knight",
+  "promoted-knight",
+  "lance",
+  "promoted-lance",
+  "pawn",
+  "promoted-pawn"
 ];
 
 export default {
@@ -66,8 +66,7 @@ export default {
         return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQI12NgYAAAAAMAASDVlMcAAAAASUVORK5CYII=";
       } else {
         const type = pieceTypes[this.pieceObject.type];
-        const fileName = type.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
-        return `/images/pieces/${fileName}.png`;
+        return `/images/pieces/${type}.png`;
       }
     },
     classObject() {
