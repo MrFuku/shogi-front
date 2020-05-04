@@ -1,35 +1,45 @@
 <template>
   <div class="board">
-    <table border="3">
-      <tbody>
-        <tr
-          v-for="(row, y) in shogiBoard"
-          :key="y"
-        >
-          <td
-            class="square"
-            v-for="(po, x) in row"
-            :key="x"
+    <div class="ib-box">
+      <SideBoard></SideBoard>
+    </div>
+    <div class="ib-box">
+      <table border="3">
+        <tbody>
+          <tr
+            v-for="(row, y) in shogiBoard"
+            :key="y"
           >
-            <Piece
-              :pieceObject="po"
-              :pickupPieceId="pickupPieceId"
-              @pickup="pickup"
-              @move="move"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <td
+              class="square"
+              v-for="(po, x) in row"
+              :key="x"
+            >
+              <Piece
+                :pieceObject="po"
+                :pickupPieceId="pickupPieceId"
+                @pickup="pickup"
+                @move="move"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="ib-box">
+      <SideBoard></SideBoard>
+    </div>
   </div>
 </template>
 
 <script>
 import Piece from "~/components/parts/shogi/Pieces/Piece.vue";
+import SideBoard from "~/components/parts/shogi/SideBoard.vue";
 
 export default {
   components: {
-    Piece
+    Piece,
+    SideBoard
   },
   data() {
     return {
@@ -78,6 +88,10 @@ table {
 
 .square:hover {
   background-color: rgb(207, 177, 131);
+}
+
+.ib-box {
+  display: inline-flex;
 }
 </style>
 
