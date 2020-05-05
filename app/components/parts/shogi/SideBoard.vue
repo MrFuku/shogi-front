@@ -16,10 +16,11 @@ export default {
   components: {
     Piece
   },
-  data() {
-    return {
-      pieces: []
-    };
+  props: {
+    pieces: {
+      type: Array,
+      require: true
+    }
   }
 };
 </script>

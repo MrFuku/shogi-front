@@ -1,7 +1,7 @@
 <template>
   <div class="board">
     <div class="ib-box">
-      <SideBoard></SideBoard>
+      <SideBoard :pieces="holdingTable[0]" />
     </div>
     <div class="ib-box">
       <table border="3">
@@ -27,7 +27,7 @@
       </table>
     </div>
     <div class="ib-box">
-      <SideBoard></SideBoard>
+      <SideBoard :pieces="holdingTable[1]" />
     </div>
   </div>
 </template>
@@ -44,7 +44,8 @@ export default {
   data() {
     return {
       shogiBoard: [],
-      pickupPieceId: -1
+      pickupPieceId: -1,
+      holdingTable: []
     };
   },
   methods: {
@@ -55,17 +56,20 @@ export default {
       const url = "/table/move";
       const data = {
         table: this.shogiBoard,
+        holdingTable: this.holdingTable,
         y,
         x,
         pieceId: this.pickupPieceId
       };
       const response = await this.$axios.$post(url, data);
       this.shogiBoard = response.table;
+      this.holdingTable = response.holdingTable;
     },
     async init() {
       const url = "/table";
       const response = await this.$axios.$get(url);
       this.shogiBoard = response.table;
+      this.holdingTable = response.holdingTable;
     }
   },
   mounted() {
