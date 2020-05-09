@@ -53,7 +53,8 @@ export default {
     return {
       shogiBoard: [],
       pickupPieceId: -1,
-      holdingTable: []
+      holdingTable: [],
+      turnPlayerId: null
     };
   },
   methods: {
@@ -65,6 +66,7 @@ export default {
       const data = {
         table: this.shogiBoard,
         holdingTable: this.holdingTable,
+        turnPlayerId: this.turnPlayerId,
         y,
         x,
         pieceId: this.pickupPieceId
@@ -72,12 +74,14 @@ export default {
       const response = await this.$axios.$post(url, data);
       this.shogiBoard = response.table;
       this.holdingTable = response.holdingTable;
+      this.turnPlayerId = response.turnPlayerId;
     },
     async init() {
       const url = "/table";
       const response = await this.$axios.$get(url);
       this.shogiBoard = response.table;
       this.holdingTable = response.holdingTable;
+      this.turnPlayerId = response.turnPlayerId;
     }
   },
   mounted() {

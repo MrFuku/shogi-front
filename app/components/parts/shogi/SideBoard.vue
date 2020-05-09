@@ -5,6 +5,8 @@
       :key="i"
       :pieceObject="p"
       :pickupPieceId="-1"
+      @pickup="pickup"
+      @move="move"
     />
   </div>
 </template>
@@ -20,6 +22,14 @@ export default {
     pieces: {
       type: Array,
       require: true
+    }
+  },
+  methods: {
+    pickup(pieceId){
+      this.$emit("pickup", pieceId);
+    },
+    move(y, x) {
+      this.$emit("move", y, x);
     }
   }
 };
