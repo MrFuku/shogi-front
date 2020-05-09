@@ -1,7 +1,11 @@
 <template>
   <div class="board">
     <div class="ib-box">
-      <SideBoard :pieces="holdingTable[0]" />
+      <SideBoard
+        :pieces="holdingTable[0]"
+        @pickup="pickup"
+        @move="move"
+      />
     </div>
     <div class="ib-box">
       <table border="3">
@@ -27,7 +31,11 @@
       </table>
     </div>
     <div class="ib-box">
-      <SideBoard :pieces="holdingTable[1]" />
+      <SideBoard
+        :pieces="holdingTable[1]"
+        @pickup="pickup"
+        @move="move"
+      />
     </div>
   </div>
 </template>
